@@ -13,13 +13,14 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     environment:
-      - RABBITMQ_DEFAULT_PASS=rabbit
-      - RABBITMQ_DEFAULT_USER=rabbit
-      - RABBITMQ_DEFAULT_VHOST=rabbitmq
+      - RABBITMQ_DEFAULT_PASS
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_VHOST
   web:
     build: karolkrych/email-marketing
     command: >
-      bash -c "python manage.py makemigrations --merge
+      bash -c "cd email-marketing
+      && python manage.py makemigrations --merge
       && python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000"
     ports:
@@ -38,7 +39,9 @@ services:
       - POSTGRES_PORT
   celery:
     build: karolkrych/email-marketing
-    command: celery -A email_marketing worker -l info
+    command: >
+      bash -c "cd email-marketing
+      && celery -A email_marketing worker -l info"
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD

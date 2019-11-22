@@ -6,6 +6,11 @@ services:
       - POSTGRES_USER=email_marketing
       - POSTGRES_PASSWORD=demo123
       - POSTGRES_DB=demo
+  rabbitmq:
+    environment:
+      - RABBITMQ_DEFAULT_PASS=rabbit
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_VHOST=rabbitmq
   web:
     build: .
     environment:
