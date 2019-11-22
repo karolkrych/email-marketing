@@ -16,8 +16,6 @@ For development: all you need to do is to have docker installed and repo locally
 docker-compose up
 ```
 
-For other usages: image for this app is available at DockerHub, it's called `python-email-marketing-demo-recruitment-app` 
-
 ## Usage
 
 At first, let's say you are using this app locally, so we can work on host `127.0.0.1`.
