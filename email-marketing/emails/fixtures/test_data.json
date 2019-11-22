@@ -1,0 +1,53 @@
+[ 
+   { 
+      "model":"contacts.contact",
+      "pk":1,
+      "fields":{ 
+         "email_address":"test@test.test",
+         "first_name":"John",
+         "last_name":"Doe",
+         "segment":null
+      }
+   },
+   { 
+      "model":"contacts.segment",
+      "pk":1,
+      "fields":{ 
+         "name":"early adopters"
+      }
+   },
+   { 
+      "model":"contacts.segment",
+      "pk":2,
+      "fields":{ 
+         "name":"beta testers"
+      }
+   },
+   { 
+      "model":"contacts.segment",
+      "pk":3,
+      "fields":{ 
+         "name":"top customers"
+      }
+   },
+   { 
+      "model":"core.config",
+      "pk":1,
+      "fields":{ 
+         "flyps_login":"flyps_user",
+         "flyps_password":"flyps_password",
+         "header_email":"email_marketing@marketing.com",
+         "header_name":"Test Header Name"
+      }
+   },
+   {
+      "model":"emails.emailtemplate",
+      "pk":1,
+      "fields":{
+         "name":"test_template",
+         "subject":"Hello {{ recipient.first_name }}!",
+         "html_content":"<html><head></head><body>Hi {{ recipient.first_name }} {{ recipient.last_name }}</body></html>",
+         "text_content":"Hi {{ recipient.first_name }} {{ recipient.last_name }}"
+      }
+   }
+]

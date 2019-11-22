@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    container_name: my_postgres
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_PASS=rabbit
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_VHOST=rabbitmq
+  web:
+    build: karolkrych/email-marketing
+    command: >
+      bash -c "python manage.py makemigrations --merge
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+    links:
+      - db
+      - rabbitmq
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DATABASE
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+  celery:
+    build: karolkrych/email-marketing
+    command: celery -A email_marketing worker -l info
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DATABASE
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+    depends_on:
+      - db
+      - rabbitmq
+
+volumes:
+  pgdata:
